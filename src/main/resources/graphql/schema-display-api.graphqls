@@ -1,0 +1,16 @@
+type Query {
+    getSomething: Foobar!
+}
+
+type Foobar {
+    name: String!
+}
+
+#type Mutation {
+#    saveFoobar(foobar: FoobarInput!): String
+#}
+
+#input FoobarInput {
+#    name: String!
+#}
+
