@@ -1,8 +1,8 @@
 type Query {
-    getSomething: Foobar!
+    ping: Pong!
 }
 
-type Foobar {
+type Pong {
     name: String!
 }
 

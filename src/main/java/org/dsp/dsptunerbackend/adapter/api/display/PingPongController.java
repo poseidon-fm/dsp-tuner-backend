@@ -1,15 +1,15 @@
 package org.dsp.dsptunerbackend.adapter.api.display;
 
-import org.dsp.dsptunerbackend.domain.Foobar;
+import org.dsp.dsptunerbackend.domain.Pong;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class FoobarController {
+public class PingPongController {
 
     @QueryMapping
-    public Foobar getSomething() {
-        return new Foobar("Klaas Vaak: 117");
+    public Pong ping() {
+        return new Pong("We have connection!");
     }
 
 
