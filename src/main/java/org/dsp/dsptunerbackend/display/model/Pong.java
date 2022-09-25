@@ -1,4 +1,4 @@
-package org.dsp.dsptunerbackend.domain;
+package org.dsp.dsptunerbackend.display.model;
 
 import lombok.Data;
 import lombok.NonNull;
@@ -8,6 +8,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Pong {
 
-    @NonNull String name;
+    @NonNull String pong;
 
 }

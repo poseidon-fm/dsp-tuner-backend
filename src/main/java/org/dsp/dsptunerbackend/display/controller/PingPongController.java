@@ -1,6 +1,6 @@
-package org.dsp.dsptunerbackend.adapter.api.display;
+package org.dsp.dsptunerbackend.display.controller;
 
-import org.dsp.dsptunerbackend.domain.Pong;
+import org.dsp.dsptunerbackend.display.model.Pong;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
@@ -11,6 +11,5 @@ public class PingPongController {
     public Pong ping() {
         return new Pong("We have connection!");
     }
-
 
 }

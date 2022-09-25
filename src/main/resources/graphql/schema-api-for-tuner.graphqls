@@ -1,0 +1,23 @@
+type Mutation {
+
+    sendRadioDetailsToDisplay(radioDetails: RadioDetails!): String
+}
+
+input RadioDetails {
+    radioId: String!
+    settings: RadioSettings!
+    data: RadioData
+
+}
+
+input RadioSettings {
+    squelch: Int!
+    stereo: Boolean!
+
+}
+
+input RadioData {
+    signalStrength: Float!
+}
+
+

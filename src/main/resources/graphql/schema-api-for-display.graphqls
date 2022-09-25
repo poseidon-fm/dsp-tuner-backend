@@ -1,0 +1,8 @@
+type Query {
+    ping: Pong!
+}
+
+type Pong {
+    pong: String!
+}
+
