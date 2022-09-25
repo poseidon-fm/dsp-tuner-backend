@@ -1,8 +1,24 @@
 type Query {
-    ping: Pong!
+    ping: String
 }
 
-type Pong {
-    pong: String!
+type Subscription {
+    onNewRadioDetails: RadioDetails!
 }
+
+type RadioDetails {
+    radioId: String!
+    settings: RadioSettings!
+    data: RadioData
+}
+
+type RadioSettings {
+    squelch: Int!
+    stereo: Boolean!
+}
+
+type RadioData {
+    signalStrength: Float!
+}
+
 
