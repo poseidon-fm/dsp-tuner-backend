@@ -3,6 +3,8 @@ package org.dsp.dsptunerbackend.api.display.publisher;
 import org.dsp.dsptunerbackend.model.radiodetails.RadioDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
@@ -11,8 +13,9 @@ import reactor.util.concurrent.Queues;
 @Component
 public class NewRadioDetailsPublisher {
 
-    private static final Logger LOG = LoggerFactory.getLogger(NewRadioDetailsPublisher.class);
     private final Sinks.Many<RadioDetails> sink;
+
+    private static final Logger LOG = LoggerFactory.getLogger(NewRadioDetailsPublisher.class);
 
     public NewRadioDetailsPublisher() {
         this.sink = Sinks.many()
@@ -20,23 +23,12 @@ public class NewRadioDetailsPublisher {
                 .onBackpressureBuffer(Queues.SMALL_BUFFER_SIZE, false);
     }
 
-//    @TransactionalEventListener
-//    @Transactional(propagation = Propagation.REQUIRES_NEW)
-//    public void onNewRadioDetails(RadioDetails radioDetails) {
-//        this.sink.emitNext(radioDetails, Sinks.EmitFailureHandler.FAIL_FAST);
-//
-//        LOG.info("NEW RADIO DETAILS ARE EMITTED TO FLUX STREAM");
-//
-//    }
-
-//    @Scheduled(fixedRate = 3000)
-//    public void onNewRadioDetails() {
-//        var radioSettings = new RadioSettings(12, true);
-//        var radioData = new RadioData(new BigDecimal("45.63"));
-//        var radioDetails = new RadioDetails(UUID.randomUUID().toString(), radioSettings, radioData);
-//        this.sink.tryEmitNext(radioDetails);
-//        LOG.info("NEW RADIO DETAILS ARE EMITTED TO FLUX STREAM");
-//    }
+    @Async
+    @EventListener
+    public void onNewRadioDetails(RadioDetails radioDetails) {
+        this.sink.emitNext(radioDetails, Sinks.EmitFailureHandler.FAIL_FAST);
+        LOG.debug("Emitted new radio details to event publisher sink");
+    }
 
     public Flux<RadioDetails> getPublisher() {
         return this.sink.asFlux();

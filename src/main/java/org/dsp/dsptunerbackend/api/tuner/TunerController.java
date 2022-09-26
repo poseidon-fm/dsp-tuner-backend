@@ -20,16 +20,8 @@ public class TunerController {
 
     @MutationMapping
     public void sendRadioDetailsToDisplay(@Argument("radioDetails") RadioDetails radioDetails) {
-        LOG.info(">>>> sendRadioDetailsToDisplay call received!!!");
-
-        LOG.info("radioId: " + radioDetails.getRadioId());
-        LOG.info("squelch: " + radioDetails.getSettings().getSquelch());
-        LOG.info("signalStrength: " + radioDetails.getData().getSignalStrength());
-
         applicationEventPublisher.publishEvent(radioDetails);
-
-        LOG.info("EVENT IS PUBLISHED");
-
+        LOG.debug("Published radio details event");
     }
 
 }
