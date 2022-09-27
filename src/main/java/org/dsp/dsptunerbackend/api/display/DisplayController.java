@@ -1,9 +1,11 @@
 package org.dsp.dsptunerbackend.api.display;
 
 import org.dsp.dsptunerbackend.api.display.publisher.NewRadioDetailsPublisher;
+import org.dsp.dsptunerbackend.model.Pong;
 import org.dsp.dsptunerbackend.model.radiodetails.RadioDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SubscriptionMapping;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
@@ -17,6 +19,11 @@ public class DisplayController {
 
     public DisplayController(NewRadioDetailsPublisher newRadioDetailsPublisher) {
         this.newRadioDetailsPublisher = newRadioDetailsPublisher;
+    }
+
+    @QueryMapping
+    public Pong ping() {
+        return new Pong("pong");
     }
 
     @SubscriptionMapping

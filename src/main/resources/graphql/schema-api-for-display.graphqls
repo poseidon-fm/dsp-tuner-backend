@@ -1,5 +1,9 @@
 type Query {
-    ping: String
+    ping: Pong!
+}
+
+type Pong {
+    pong: String!
 }
 
 type Subscription {
