@@ -8,5 +8,5 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Pong {
     @NonNull
-    private String pong;
+    private String name;
 }
