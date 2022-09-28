@@ -5,6 +5,7 @@ import org.dsp.dsptunerbackend.model.Pong;
 import org.dsp.dsptunerbackend.model.radiodetails.RadioDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SubscriptionMapping;
 import org.springframework.stereotype.Controller;
@@ -22,8 +23,11 @@ public class DisplayController {
     }
 
     @QueryMapping
-    public Pong ping() {
-        return new Pong("pong");
+    public Pong ping(@Argument Integer pongVersion) {
+        if (pongVersion == 0) {
+            return new Pong("pong 0");
+        }
+        return new Pong("pong 1");
     }
 
     @SubscriptionMapping

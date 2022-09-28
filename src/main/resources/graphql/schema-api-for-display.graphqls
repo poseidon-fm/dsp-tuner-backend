@@ -1,5 +1,5 @@
 type Query {
-    ping: Pong!
+    ping(pongVersion: Int!): Pong!
 }
 
 type Pong {
