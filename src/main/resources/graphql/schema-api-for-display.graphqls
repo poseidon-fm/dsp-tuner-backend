@@ -1,13 +1,17 @@
-type Query {
+extend type Query {
     ping(pongVersion: Int!): Pong!
+}
+
+extend type Mutation {
+    setSquelch(val: Int!, commandId: ID!): String
+}
+
+extend type Subscription {
+    onNewRadioDetails: RadioDetails!
 }
 
 type Pong {
     name: String!
-}
-
-type Subscription {
-    onNewRadioDetails: RadioDetails!
 }
 
 type RadioDetails {
