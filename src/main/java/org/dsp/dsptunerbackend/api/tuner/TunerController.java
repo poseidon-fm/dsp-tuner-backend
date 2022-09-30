@@ -31,7 +31,7 @@ public class TunerController {
     @Async
     @EventListener
     public void onSetEvent(SetEvent setEvent) {
-        LOG.debug("Received on set event for type " + setEvent.getType().toString().toLowerCase());
+        LOG.debug("Received on set event for type " + setEvent.getType().toString().toLowerCase() + ", value " + setEvent.getVal() + ", commandId " + setEvent.getCommandId());
 
         // TODO: implement command to tuner
 
