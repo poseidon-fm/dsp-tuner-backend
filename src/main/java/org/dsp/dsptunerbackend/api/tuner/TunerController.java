@@ -1,5 +1,6 @@
 package org.dsp.dsptunerbackend.api.tuner;
 
+import org.dsp.dsptunerbackend.api.tuner.service.SetEventService;
 import org.dsp.dsptunerbackend.model.events.SetEvent;
 import org.dsp.dsptunerbackend.model.radiodetails.RadioDetails;
 import org.slf4j.Logger;
@@ -15,26 +16,26 @@ import org.springframework.stereotype.Controller;
 public class TunerController {
 
     private final ApplicationEventPublisher applicationEventPublisher;
+    private final SetEventService setEventService;
 
     private static final Logger LOG = LoggerFactory.getLogger(TunerController.class);
 
-    public TunerController(ApplicationEventPublisher applicationEventPublisher) {
+    public TunerController(ApplicationEventPublisher applicationEventPublisher, SetEventService setEventService) {
         this.applicationEventPublisher = applicationEventPublisher;
+        this.setEventService = setEventService;
     }
 
     @MutationMapping
     public void sendRadioDetailsToDisplay(@Argument("radioDetails") RadioDetails radioDetails) {
         applicationEventPublisher.publishEvent(radioDetails);
-        LOG.debug("Published radio details event");
+        LOG.debug("Published radio details event for radioId " + radioDetails.getRadioId());
     }
 
     @Async
     @EventListener
     public void onSetEvent(SetEvent setEvent) {
-        LOG.debug("Received on set event for type " + setEvent.getType().toString().toLowerCase() + ", value " + setEvent.getVal() + ", commandId " + setEvent.getCommandId());
-
-        // TODO: implement command to tuner
-
+        setEventService.setEvent(setEvent);
+        LOG.debug("Set event for type " + setEvent.getType().toString().toLowerCase() + ", value " + setEvent.getVal() + ", commandId " + setEvent.getCommandId());
     }
 
 }
