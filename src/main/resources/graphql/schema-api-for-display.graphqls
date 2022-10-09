@@ -3,7 +3,7 @@ extend type Query {
 }
 
 extend type Mutation {
-    setSquelch(val: Int!, commandId: ID!): String
+    changeSettings(changeSettings: [ChangeSettingInput!]!): String
 }
 
 extend type Subscription {
@@ -12,6 +12,17 @@ extend type Subscription {
 
 type Pong {
     name: String!
+}
+
+input ChangeSettingInput {
+    radioId: String!
+    type: SettingType!
+    val: String!
+    commandId: Int!
+}
+
+enum SettingType {
+    SQUELCH
 }
 
 type RadioDetails {

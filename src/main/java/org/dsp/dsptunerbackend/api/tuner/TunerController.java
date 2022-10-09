@@ -1,7 +1,7 @@
 package org.dsp.dsptunerbackend.api.tuner;
 
-import org.dsp.dsptunerbackend.api.tuner.service.SetEventService;
-import org.dsp.dsptunerbackend.model.events.SetEvent;
+import org.dsp.dsptunerbackend.api.tuner.service.ChangeSettingsEventService;
+import org.dsp.dsptunerbackend.model.events.ChangeSettingsEvent;
 import org.dsp.dsptunerbackend.model.radiodetails.RadioDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,13 +16,13 @@ import org.springframework.stereotype.Controller;
 public class TunerController {
 
     private final ApplicationEventPublisher applicationEventPublisher;
-    private final SetEventService setEventService;
+    private final ChangeSettingsEventService changeSettingsEventService;
 
     private static final Logger LOG = LoggerFactory.getLogger(TunerController.class);
 
-    public TunerController(ApplicationEventPublisher applicationEventPublisher, SetEventService setEventService) {
+    public TunerController(ApplicationEventPublisher applicationEventPublisher, ChangeSettingsEventService changeSettingsEventService) {
         this.applicationEventPublisher = applicationEventPublisher;
-        this.setEventService = setEventService;
+        this.changeSettingsEventService = changeSettingsEventService;
     }
 
     @MutationMapping
@@ -33,9 +33,10 @@ public class TunerController {
 
     @Async
     @EventListener
-    public void onSetEvent(SetEvent setEvent) {
-        setEventService.setEvent(setEvent);
-        LOG.debug("Set event for type " + setEvent.getType().toString().toLowerCase() + ", value " + setEvent.getVal() + ", commandId " + setEvent.getCommandId());
+    public void onChangeSettingsEvent(ChangeSettingsEvent event) {
+        LOG.debug("Received on change settings event");
+        LOG.debug(event.toString());
+        changeSettingsEventService.processChangeSettings(event);
     }
 
 }

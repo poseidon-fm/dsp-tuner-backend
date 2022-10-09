@@ -2,8 +2,8 @@ package org.dsp.dsptunerbackend.api.display;
 
 import org.dsp.dsptunerbackend.api.display.publisher.NewRadioDetailsPublisher;
 import org.dsp.dsptunerbackend.model.Pong;
-import org.dsp.dsptunerbackend.model.events.SetEvent;
-import org.dsp.dsptunerbackend.model.events.SetType;
+import org.dsp.dsptunerbackend.model.events.ChangeSetting;
+import org.dsp.dsptunerbackend.model.events.ChangeSettingsEvent;
 import org.dsp.dsptunerbackend.model.radiodetails.RadioDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,7 @@ import org.springframework.graphql.data.method.annotation.SubscriptionMapping;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
 
-import java.util.UUID;
+import java.util.ArrayList;
 
 @Controller
 public class DisplayController {
@@ -45,10 +45,9 @@ public class DisplayController {
     }
 
     @MutationMapping
-    public void setSquelch(@Argument Integer val, @Argument UUID commandId) {
-        applicationEventPublisher.publishEvent(
-                new SetEvent(SetType.SQUELCH, val.toString(), commandId));
-        LOG.debug("Published set event for type " + SetType.SQUELCH.toString().toLowerCase());
+    public void changeSettings(@Argument("changeSettings") ArrayList<ChangeSetting> changeSettings) {
+        applicationEventPublisher.publishEvent(new ChangeSettingsEvent(changeSettings));
+        LOG.debug("Published change settings event");
     }
 
 }
